@@ -333,7 +333,6 @@ func insertionSortByHarga() {
 	fmt.Println()
 }
 
-
 // Cari NFT berdasarkan harga (sequential search)
 func sequentialSearchHarga(harga float64) {
 	found := false
@@ -365,3 +364,61 @@ func cetakSemuaData() { //buat ngeprint semua NFT yang kita punya
 	}
 	fmt.Println()
 }
+
+/*
+===============================================================================
+						LAPORAN KOMENTAR PROGRAM
+		Tugas Besar Aplikasi Manajemen Portofolio NFT dan Karya Digital
+===============================================================================
+
+1. Nomor dan Judul Topik:
+   Topik 29	 - Aplikasi Manajemen Portofolio NFT dan Karya Digital
+
+2. Deskripsi Masalah:
+  	 Banyak seniman digital dan kolektor NFT kesulitan dalam mencatat, mengatur, dan memantau koleksi NFT mereka secara praktis.
+	 Tanpa sistem yang terstruktur, mereka sulit mengetahui perubahan harga, nilai total investasi, dan riwayat transaksi.
+	 Oleh karena itu, dibutuhkan aplikasi sederhana yang dapat membantu pengguna untuk mengelola portofolio NFT mereka secara efektif,
+	 termasuk fitur pencarian, pengurutan, dan pelacakan data NFT.
+
+3. Identitas Tim:
+   - Mikael Eureka Anakotta - 103012400420
+   - Dillah Emeylia Putri - 103012430061
+
+4. Penjabaran Proses Pengerjaan:
+
+   A. Fungsi yang Telah Diselesaikan:
+      Pembuatan tampilan menu utama dan sistem navigasi berbasis pilihan angka.
+      Implementasi fitur CRUD (Create, Read, Update, Delete) pada data NFT:
+         - Pengguna dapat menambahkan NFT dengan data: nama, ID unik, harga, dan deskripsi.
+         - Edit NFT dengan mengubah data berdasarkan ID.
+         - Hapus NFT secara permanen dari array dengan menyesuaikan elemen array.
+         - Tampilkan seluruh NFT yang tersedia di portofolio.
+      Sistem pencarian NFT:
+         - Mencari NFT berdasarkan ID, nama, atau kisaran harga.
+         - Mencetak hasil pencarian dengan format tabel yang rapi.
+      Fitur pengurutan (sorting):
+         - Mengurutkan NFT berdasarkan ID.
+         - Mengurutkan NFT berdasarkan harga.
+         - Dilengkapi logika pertukaran data dalam array saat proses sorting.
+      Menampilkan total nilai portofolio NFT:
+         - Menjumlahkan seluruh harga NFT dalam portofolio.
+         - Menampilkan hasil akhir sebagai estimasi nilai kekayaan digital pengguna.
+      Histori aktivitas:
+         - Menyimpan log aktivitas seperti penambahan, penghapusan, dan pengeditan NFT.
+         - Menampilkan daftar histori sesuai urutan waktu aktivitas.
+
+   B. Permasalahan Teknis yang Dihadapi Selama Pengembangan:
+      - Kesulitan awal dalam mengatur struktur array untuk menyimpan data NFT secara dinamis.
+      - Menyusun logika penghapusan elemen array tanpa menimbulkan celah kosong.
+      - Penanganan input pengguna agar tidak menyebabkan panic saat program berjalan (validasi input belum maksimal).
+      - Menentukan skema penyimpanan log aktivitas tanpa menggunakan fitur lanjutan seperti slice atau map.
+      - Menjaga konsistensi data saat pengeditan dan pengurutan dilakukan secara bersamaan.
+      - Mencegah data ID ganda atau konflik antara data yang ada dengan input baru.
+
+   C. Rencana Pengembangan Selanjutnya:
+      - Penambahan validasi input yang lebih kuat:
+         > Mendeteksi karakter yang tidak valid pada nama NFT
+         > Membatasi ID agar tidak boleh sama
+         > Menolak input kosong atau salah format
+===============================================================================
+*/
