@@ -160,11 +160,11 @@ func tampilkanTotal() {
 // Menu pemilihan metode pencarian
 func menuCariNFT() {
 	var pilihan int
-	fmt.Printf("+======================= PENCARIAN ========================+\n")
+	fmt.Printf("+=================== PENCARIAN ====================+\n")
 	fmt.Printf("|%-52s|\n", "1. Sequential Search (Nama)")
 	fmt.Printf("|%-52s|\n", "2. Binary Search (ID)")
 	fmt.Printf("|%-52s|\n", "3. Sequential Search (Harga)")
-	fmt.Printf("+==========================================================+\n")
+	fmt.Printf("+==================================================+\n")
 	fmt.Print("Pilih metode pencarian: ")
 	fmt.Scan(&pilihan)
 
@@ -204,17 +204,31 @@ func sequentialSearch(nama string) {
 	fmt.Println()
 }
 
+// Cari NFT berdasarkan harga (sequential search)
+func sequentialSearchHarga(harga float64) {
+	found := false
+	for i := 0; i < jumlahNFT; i++ {
+		if dataNFT[i].harga == harga {
+			fmt.Printf("Ditemukan: ID: %d, Nama: %s, Harga: %.2f\n", dataNFT[i].id, dataNFT[i].nama, dataNFT[i].harga)
+			found = true
+		}
+	}
+	if !found {
+		fmt.Println("NFT dengan harga tersebut tidak ditemukan.")
+	}
+}
+
 // Binary search: cari berdasarkan ID
-func binarySearch(target int) {
+func binarySearch(cari int) {
 	selectionSortByID()
 	low := 0
 	high := jumlahNFT - 1
 	for low <= high {
 		mid := (low + high) / 2
-		if dataNFT[mid].id == target {
+		if dataNFT[mid].id == cari {
 			fmt.Printf("Ditemukan: ID: %d, Nama: %s, Harga: %f\n", dataNFT[mid].id, dataNFT[mid].nama, dataNFT[mid].harga)
 			return
-		} else if dataNFT[mid].id < target {
+		} else if dataNFT[mid].id < cari {
 			low = mid + 1
 		} else {
 			high = mid - 1
@@ -280,14 +294,18 @@ func menuUrutNFT() {
 
 // Seleksi berdasarkan ID
 func selectionSortByID() {
+	var temp NFT
 	for i := 0; i < jumlahNFT-1; i++ {
-		min := i
+		min := 0
 		for j := i + 1; j < jumlahNFT; j++ {
 			if dataNFT[j].id < dataNFT[min].id {
 				min = j
 			}
 		}
-		dataNFT[i], dataNFT[min] = dataNFT[min], dataNFT[i]
+		// Tukar pakai variabel sementara (temp)
+		temp = dataNFT[i]
+		dataNFT[i] = dataNFT[min]
+		dataNFT[min] = temp
 	}
 	fmt.Println()
 }
@@ -307,6 +325,7 @@ func insertionSortByID() {
 
 // Seleksi berdasarkan harga
 func selectionSortByHarga() {
+	var temp NFT
 	for i := 0; i < jumlahNFT-1; i++ {
 		min := i
 		for j := i + 1; j < jumlahNFT; j++ {
@@ -314,7 +333,10 @@ func selectionSortByHarga() {
 				min = j
 			}
 		}
-		dataNFT[i], dataNFT[min] = dataNFT[min], dataNFT[i]
+		// Tukar pakai temp
+		temp = dataNFT[i]
+		dataNFT[i] = dataNFT[min]
+		dataNFT[min] = temp
 	}
 	fmt.Println()
 }
@@ -331,20 +353,6 @@ func insertionSortByHarga() {
 		dataNFT[j+1] = temp
 	}
 	fmt.Println()
-}
-
-// Cari NFT berdasarkan harga (sequential search)
-func sequentialSearchHarga(harga float64) {
-	found := false
-	for i := 0; i < jumlahNFT; i++ {
-		if dataNFT[i].harga == harga {
-			fmt.Printf("Ditemukan: ID: %d, Nama: %s, Harga: %.2f\n", dataNFT[i].id, dataNFT[i].nama, dataNFT[i].harga)
-			found = true
-		}
-	}
-	if !found {
-		fmt.Println("NFT dengan harga tersebut tidak ditemukan.")
-	}
 }
 
 func cetakSemuaData() { //buat ngeprint semua NFT yang kita punya
