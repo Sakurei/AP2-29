@@ -6,9 +6,10 @@ const max = 1000
 
 // Struktur NFT menyimpan nama, ID, dan harga NFT
 type NFT struct {
-	nama  string
-	id    int
-	harga float64
+	nama         string
+	id           int
+	HargaAwalNFT float64
+	harga        float64
 }
 
 type arrNFT [max]NFT
@@ -66,6 +67,8 @@ func main() {
 		case 8:
 			fmt.Println("Terima kasih telah menggunakan aplikasi.")
 			fmt.Println()
+		case 9:
+			laporanInvestasi()
 		default:
 			fmt.Println("Pilihan tidak valid.")
 		}
@@ -95,19 +98,58 @@ func editNFT() {
 	var id int
 	fmt.Print("Masukkan ID NFT yang ingin diedit: ")
 	fmt.Scan(&id)
-	for i := 0; i < jumlahNFT; i++ {
+
+	for i := 0; i <= jumlahNFT; i++ {
 		if dataNFT[i].id == id {
-			fmt.Print("Nama Baru (1 kata): ")
-			fmt.Scan(&dataNFT[i].nama)
-			fmt.Print("Harga Baru: ")
-			fmt.Scan(&dataNFT[i].harga)
-			history[nHistory] = "Mengedit NFT"
-			nHistory++
+			var pilihan int
+			var newNama string
+			var newHarga float64
+
+			fmt.Println("Data NFT Ditemukan:")
+			fmt.Printf("Nama: %s | Harga: %.2f\n", dataNFT[i].nama, dataNFT[i].harga)
+			fmt.Println("Apa yang ingin Anda ubah?")
+			fmt.Println("1. Nama NFT")
+			fmt.Println("2. Harga NFT")
+			fmt.Print("Pilihan: ")
+			fmt.Scan(&pilihan)
+
+			if pilihan == 1 {
+				fmt.Print("Masukkan nama baru: ")
+				fmt.Scan(&newNama)
+				fmt.Println("\nPerubahan:")
+				fmt.Printf("Sebelum: %s\n", dataNFT[i].nama)
+				fmt.Printf("Sesudah: %s\n", newNama)
+			} else if pilihan == 2 {
+				fmt.Print("Masukkan harga baru: ")
+				fmt.Scan(&newHarga)
+				fmt.Println("\nPerubahan:")
+				fmt.Printf("Sebelum: %.2f\n", dataNFT[i].harga)
+				fmt.Printf("Sesudah: %.2f\n", newHarga)
+			} else {
+				fmt.Println("Pilihan tidak valid.")
+				return
+			}
+
+			var konfirmasi string
+			fmt.Print("Terima perubahan? (ya/tidak): ")
+			fmt.Scan(&konfirmasi)
+
+			if konfirmasi == "ya" {
+				if pilihan == 1 {
+					dataNFT[i].nama = newNama
+				} else if pilihan == 2 {
+					dataNFT[i].harga = newHarga
+				}
+				history[nHistory] = fmt.Sprintf("Mengedit NFT ID %d", id)
+				nHistory++
+				fmt.Println("Perubahan berhasil disimpan.")
+			} else {
+				fmt.Println("Perubahan dibatalkan.")
+			}
 			return
 		}
 	}
 	fmt.Println("NFT tidak ditemukan.")
-	fmt.Println()
 }
 
 // Fungsi untuk menghapus NFT berdasarkan ID
@@ -161,6 +203,7 @@ func tampilkanTotal() {
 func menuCariNFT() {
 	var pilihan int
 	fmt.Printf("+=================== PENCARIAN ====================+\n")
+	fmt.Printf("|%-52s|\n", "   Cari berdasarkan : ")
 	fmt.Printf("|%-52s|\n", "1. Sequential Search (Nama)")
 	fmt.Printf("|%-52s|\n", "2. Binary Search (ID)")
 	fmt.Printf("|%-52s|\n", "3. Sequential Search (Harga)")
@@ -221,17 +264,17 @@ func sequentialSearchHarga(harga float64) {
 // Binary search: cari berdasarkan ID
 func binarySearch(cari int) {
 	selectionSortByID()
-	low := 0
-	high := jumlahNFT - 1
-	for low <= high {
-		mid := (low + high) / 2
+	kiri := 0
+	kanan := jumlahNFT - 1
+	for kiri <= kanan {
+		mid := (kiri + kanan) / 2
 		if dataNFT[mid].id == cari {
-			fmt.Printf("Ditemukan: ID: %d, Nama: %s, Harga: %f\n", dataNFT[mid].id, dataNFT[mid].nama, dataNFT[mid].harga)
+			fmt.Printf("Ditemukan: ID: %d, Nama: %s, Harga: %.2f\n", dataNFT[mid].id, dataNFT[mid].nama, dataNFT[mid].harga)
 			return
 		} else if dataNFT[mid].id < cari {
-			low = mid + 1
+			kiri = mid + 1
 		} else {
-			high = mid - 1
+			kanan = mid - 1
 		}
 	}
 	fmt.Println("NFT tidak ditemukan.")
@@ -296,7 +339,7 @@ func menuUrutNFT() {
 func selectionSortByID() {
 	var temp NFT
 	for i := 0; i < jumlahNFT-1; i++ {
-		min := 0
+		min := i
 		for j := i + 1; j < jumlahNFT; j++ {
 			if dataNFT[j].id < dataNFT[min].id {
 				min = j
@@ -343,14 +386,14 @@ func selectionSortByHarga() {
 
 // Insertion sort berdasarkan harga
 func insertionSortByHarga() {
-	for i := 1; i < jumlahNFT; i++ {
-		temp := dataNFT[i]
-		j := i - 1
+	for i := 0; i < jumlahNFT; i++ {
+		temp := dataNFT[i+1]
+		j := i
 		for j >= 0 && dataNFT[j].harga > temp.harga {
 			dataNFT[j+1] = dataNFT[j]
 			j--
 		}
-		dataNFT[j+1] = temp
+		dataNFT[j] = temp
 	}
 	fmt.Println()
 }
@@ -371,6 +414,22 @@ func cetakSemuaData() { //buat ngeprint semua NFT yang kita punya
 		fmt.Printf("+======+=========================+==============+\n")
 	}
 	fmt.Println()
+}
+
+func laporanInvestasi() {
+	var total, untung, rugi float64
+	for i := 0; i <= jumlahNFT; i++ {
+		selisih := dataNFT[i].harga - dataNFT[i].HargaAwalNFT
+		total += dataNFT[i].harga
+		if selisih > 0 {
+			untung += selisih
+		} else {
+			rugi += -selisih
+		}
+	}
+	fmt.Println("Total Nilai Portofolio:", total)
+	fmt.Println("Total Keuntungan:", untung)
+	fmt.Println("Total Kerugian:", rugi)
 }
 
 /*
