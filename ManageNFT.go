@@ -60,7 +60,7 @@ package main
 
 import "fmt"
 
-const max = 1000
+const max = 1204
 
 // Struktur NFT menyimpan nama, ID, dan harga NFT
 type NFT struct {
