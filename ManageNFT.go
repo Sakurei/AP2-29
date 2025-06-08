@@ -75,6 +75,7 @@ type historyArr [max]string
 
 var dataNFT arrNFT
 var jumlahNFT int = -1
+var IDmasuk int = 100 //agar nanti mulai 101
 var history historyArr
 var nHistory int
 
@@ -100,8 +101,7 @@ func main() {
 		fmt.Printf("\n|%-50s|", "5. Urutkan NFT")
 		fmt.Printf("\n|%-50s|", "6. Tampilkan History dan Total Nilai Portofolio")
 		fmt.Printf("\n|%-50s|", "7. Cetak Semua Data")
-		fmt.Printf("\n|%-50s|", "8. Laporan Investasi")
-		fmt.Printf("\n|%-50s|", "9. Keluar")
+		fmt.Printf("\n|%-50s|", "8. Keluar")
 		fmt.Printf("\n+==================================================+\n")
 		fmt.Print("Pilihan: ")
 		fmt.Scan(&pilihan)
@@ -126,8 +126,6 @@ func main() {
 		case 8:
 			fmt.Println("Terima kasih telah menggunakan aplikasi.")
 			fmt.Println()
-		case 9:
-			laporanInvestasi()
 		default:
 			fmt.Println("Pilihan tidak valid.")
 		}
@@ -141,14 +139,17 @@ func tambahNFT() {
 		return
 	}
 	jumlahNFT++
-	fmt.Print("ID NFT: ")
-	fmt.Scan(&dataNFT[jumlahNFT].id)
+	IDmasuk++ // auto-increment
+	dataNFT[jumlahNFT].id = IDmasuk
+
+	fmt.Printf("ID NFT: %d\n", dataNFT[jumlahNFT].id)
 	fmt.Print("Nama NFT : ")
 	fmt.Scan(&dataNFT[jumlahNFT].nama)
 	fmt.Print("Harga NFT: ")
 	fmt.Scan(&dataNFT[jumlahNFT].harga)
 	fmt.Println()
-	history[nHistory] = "Menambahkan NFT"
+
+	history[nHistory] = fmt.Sprintf("Menambahkan NFT ID %d", IDmasuk)
 	nHistory++
 }
 
@@ -483,21 +484,5 @@ func cetakSemuaData() { //buat ngeprint semua NFT yang kita punya
 		fmt.Printf("| %-4d | %-23s | Rp,%-6.2f |\n", dataNFT[i].id, dataNFT[i].nama, dataNFT[i].harga)
 		fmt.Printf("+======+=========================+==============+\n")
 	}
-	fmt.Println()
-}
-
-func laporanInvestasi() {
-	var total, untung, rugi float64
-	for i := 0; i <= jumlahNFT; i++ {
-		selisih := dataNFT[i].harga - dataNFT[i].HargaAwalNFT
-		total += dataNFT[i].harga
-		if selisih > 0 {
-			untung += selisih
-		} else {
-			rugi += -selisih
-		}
-	}
-	fmt.Println("Total Nilai Portofolio:", total)
-	fmt.Println("Total Keuntungan:", untung)
-	fmt.Println("Total Kerugian:", rugi)
+	fmt.Println()	
 }
