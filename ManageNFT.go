@@ -43,6 +43,7 @@
          > Menyimpan log aktivitas seperti penambahan, penghapusan, dan pengeditan NFT.
          > Menampilkan daftar histori aktivitas sesuai urutan waktu.
          > Menyediakan fitur untuk menghapus seluruh histori yang tersimpan jika pengguna menginginkannya (clear history).
+	  - Mengganti total array dengan 1204
 
     B. Permasalahan Teknis yang Dihadapi Selama Pengembangan:
       - Awalnya mengalami kesulitan saat menentukan bagaimana menyimpan banyak data NFT menggunakan array,
