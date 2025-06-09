@@ -67,9 +67,7 @@
       - Antarmuka pengguna (tampilan di terminal) masih sangat sederhana dan kurang menarik secara visual.
         Ke depannya, agar program lebih menarik di mata user, bisa dilakukan:
          > Penambahan border atau garis horizontal agar data lebih rapi.
-         > Pewarnaan teks (jika terminal mendukung) untuk membedakan menu, data, dan peringatan.
          > Penggunaan spasi yang konsisten agar semua kolom sejajar.
-         > Tampilan loading singkat atau animasi karakter agar lebih hidup (dengan teknik sederhana).
 
 	C. Rencana Pengembangan Selanjutnya:
       - Penambahan validasi input yang lebih kuat:
@@ -166,8 +164,8 @@ func menuUtama() int {
 	return pilihan
 }
 
-// tambahNFT digunakan untuk menambah data NFT baru ke dalam portofolio. 
-// Fungsi ini meminta input nama dan harga NFT dari user, mengatur ID secara auto increment, 
+// tambahNFT digunakan untuk menambah data NFT baru ke dalam portofolio.
+// Fungsi ini meminta input nama dan harga NFT dari user, mengatur ID secara auto increment,
 // serta mencatat aktivitas penambahan ke dalam history.
 func tambahNFT(dataNFT *arrNFT, jumlahNFT *int, IDmasuk *int, history *historyArr, nHistory *int) {
 	if *jumlahNFT >= max {
@@ -193,7 +191,7 @@ func tambahNFT(dataNFT *arrNFT, jumlahNFT *int, IDmasuk *int, history *historyAr
 	*jumlahNFT++
 }
 
-// editNFT digunakan untuk mengedit data NFT yang sudah ada berdasarkan ID. 
+// editNFT digunakan untuk mengedit data NFT yang sudah ada berdasarkan ID.
 // User dapat mengubah nama, harga, atau ID NFT. Setiap perubahan dicatat ke dalam history.
 func editNFT(dataNFT arrNFT, jumlahNFT int, history *historyArr, nHistory *int) {
 	var id int
@@ -257,7 +255,7 @@ func editNFT(dataNFT arrNFT, jumlahNFT int, history *historyArr, nHistory *int) 
 	fmt.Println("NFT tidak ditemukan.")
 }
 
-// hapusNFT digunakan untuk menghapus data NFT berdasarkan ID. 
+// hapusNFT digunakan untuk menghapus data NFT berdasarkan ID.
 // Setelah NFT dihapus, data di array akan digeser agar tetap rapat, dan aktivitas di-log ke history.
 func hapusNFT(dataNFT *arrNFT, jumlahNFT *int, history *historyArr, nHistory *int) {
 	var id int
@@ -376,7 +374,7 @@ func sequentialSearchHarga(dataNFT arrNFT, jumlahNFT int, harga float64) {
 	}
 }
 
-// binarySearch mencari NFT berdasarkan ID menggunakan metode binary search. 
+// binarySearch mencari NFT berdasarkan ID menggunakan metode binary search.
 // Data diurutkan terlebih dahulu berdasarkan ID sebelum pencarian.
 func binarySearch(dataNFT arrNFT, jumlahNFT int, cari int) {
 	selectionSortByID(&dataNFT, jumlahNFT)
