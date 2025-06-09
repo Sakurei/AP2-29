@@ -104,6 +104,7 @@ var nHistory int = 0
 type arrNFT [max]NFT
 type historyArr [max]string
 
+//fungsi utama yang menjalankan aplikasi dan menampilkan menu utama secara berulang hingga user memilih keluar.
 func main() {
 	Welcome()
 	for {
@@ -135,6 +136,7 @@ func main() {
 	}
 }
 
+// Welcome menampilkan pesan sambutan saat aplikasi dijalankan.
 func Welcome() {
 	fmt.Println()
 	fmt.Println("+==================================================+")
@@ -143,6 +145,7 @@ func Welcome() {
 	fmt.Println("+==================================================+")
 }
 
+// menuUtama menampilkan menu utama dan menerima input pilihan user.
 func menuUtama() int {
 	fmt.Println("\n+==================== M E N U =====================+")
 	fmt.Printf("|%-50s|", "1. Tambah NFT")
@@ -163,6 +166,9 @@ func menuUtama() int {
 	return pilihan
 }
 
+// tambahNFT digunakan untuk menambah data NFT baru ke dalam portofolio. 
+// Fungsi ini meminta input nama dan harga NFT dari user, mengatur ID secara auto increment, 
+// serta mencatat aktivitas penambahan ke dalam history.
 func tambahNFT(dataNFT *arrNFT, jumlahNFT *int, IDmasuk *int, history *historyArr, nHistory *int) {
 	if *jumlahNFT >= max {
 		fmt.Println("Data penuh, tidak bisa menambahkan NFT lagi.")
@@ -187,6 +193,8 @@ func tambahNFT(dataNFT *arrNFT, jumlahNFT *int, IDmasuk *int, history *historyAr
 	*jumlahNFT++
 }
 
+// editNFT digunakan untuk mengedit data NFT yang sudah ada berdasarkan ID. 
+// User dapat mengubah nama, harga, atau ID NFT. Setiap perubahan dicatat ke dalam history.
 func editNFT(dataNFT arrNFT, jumlahNFT int, history *historyArr, nHistory *int) {
 	var id int
 	fmt.Print("Masukkan ID NFT yang ingin diedit: ")
@@ -249,6 +257,8 @@ func editNFT(dataNFT arrNFT, jumlahNFT int, history *historyArr, nHistory *int) 
 	fmt.Println("NFT tidak ditemukan.")
 }
 
+// hapusNFT digunakan untuk menghapus data NFT berdasarkan ID. 
+// Setelah NFT dihapus, data di array akan digeser agar tetap rapat, dan aktivitas di-log ke history.
 func hapusNFT(dataNFT *arrNFT, jumlahNFT *int, history *historyArr, nHistory *int) {
 	var id int
 	fmt.Print("Masukkan ID NFT yang ingin dihapus: ")
@@ -270,6 +280,7 @@ func hapusNFT(dataNFT *arrNFT, jumlahNFT *int, history *historyArr, nHistory *in
 	fmt.Println("NFT tidak ditemukan.")
 }
 
+// tampilkanHistory menampilkan seluruh riwayat aktivitas yang telah dilakukan user pada aplikasi.
 func tampilkanHistory(history historyArr, nHistory int) {
 	fmt.Println("=== Riwayat Aktivitas ===")
 	if nHistory == 0 {
@@ -282,6 +293,7 @@ func tampilkanHistory(history historyArr, nHistory int) {
 	fmt.Println()
 }
 
+// tampilkanTotal menghitung dan menampilkan total nilai portofolio NFT yang dimiliki user.
 func tampilkanTotal(dataNFT arrNFT, jumlahNFT int) {
 	var total float64
 	for i := 0; i < jumlahNFT; i++ {
@@ -291,6 +303,7 @@ func tampilkanTotal(dataNFT arrNFT, jumlahNFT int) {
 	fmt.Println()
 }
 
+// menuCariNFT menampilkan menu pencarian NFT dan memanggil fungsi pencarian sesuai pilihan user.
 func menuCariNFT(dataNFT arrNFT, jumlahNFT int) {
 	var pilihan int
 	fmt.Printf("+=================== PENCARIAN ====================+\n")
@@ -332,6 +345,7 @@ func menuCariNFT(dataNFT arrNFT, jumlahNFT int) {
 	fmt.Println()
 }
 
+// sequentialSearch mencari NFT berdasarkan nama menggunakan metode pencarian linear.
 func sequentialSearch(dataNFT arrNFT, jumlahNFT int, nama string) {
 	found := false
 	for i := 0; i < jumlahNFT; i++ {
@@ -348,6 +362,7 @@ func sequentialSearch(dataNFT arrNFT, jumlahNFT int, nama string) {
 	fmt.Println()
 }
 
+// sequentialSearchHarga mencari NFT berdasarkan harga menggunakan metode pencarian linear.
 func sequentialSearchHarga(dataNFT arrNFT, jumlahNFT int, harga float64) {
 	found := false
 	for i := 0; i < jumlahNFT && !found; i++ {
@@ -361,6 +376,8 @@ func sequentialSearchHarga(dataNFT arrNFT, jumlahNFT int, harga float64) {
 	}
 }
 
+// binarySearch mencari NFT berdasarkan ID menggunakan metode binary search. 
+// Data diurutkan terlebih dahulu berdasarkan ID sebelum pencarian.
 func binarySearch(dataNFT arrNFT, jumlahNFT int, cari int) {
 	selectionSortByID(&dataNFT, jumlahNFT)
 	kiri := 0
@@ -388,6 +405,7 @@ func binarySearch(dataNFT arrNFT, jumlahNFT int, cari int) {
 	fmt.Println()
 }
 
+// menuUrutNFT menampilkan menu pengurutan NFT dan memanggil fungsi sorting sesuai pilihan user.
 func menuUrutNFT(dataNFT *arrNFT, jumlahNFT int) {
 	var pilihanAtribut, pilihanMetode int
 	fmt.Println("Urutkan berdasarkan:")
@@ -439,6 +457,7 @@ func menuUrutNFT(dataNFT *arrNFT, jumlahNFT int) {
 	fmt.Println()
 }
 
+// selectionSortByID mengurutkan data NFT berdasarkan ID secara ascending menggunakan selection sort.
 func selectionSortByID(dataNFT *arrNFT, jumlahNFT int) {
 	var temp NFT
 	for i := 0; i < jumlahNFT-1; i++ {
@@ -455,6 +474,7 @@ func selectionSortByID(dataNFT *arrNFT, jumlahNFT int) {
 	fmt.Println()
 }
 
+// insertionSortByID mengurutkan data NFT berdasarkan ID secara ascending menggunakan insertion sort.
 func insertionSortByID(dataNFT *arrNFT, jumlahNFT int) {
 	for i := 1; i < jumlahNFT; i++ {
 		temp := dataNFT[i]
@@ -467,6 +487,7 @@ func insertionSortByID(dataNFT *arrNFT, jumlahNFT int) {
 	}
 }
 
+// selectionSortByHarga mengurutkan data NFT berdasarkan harga secara ascending menggunakan selection sort.
 func selectionSortByHarga(dataNFT *arrNFT, jumlahNFT int) {
 	var temp NFT
 	for i := 0; i < jumlahNFT-1; i++ {
@@ -482,6 +503,8 @@ func selectionSortByHarga(dataNFT *arrNFT, jumlahNFT int) {
 	}
 	fmt.Println()
 }
+
+// insertionSortByHarga mengurutkan data NFT berdasarkan harga secara ascending menggunakan insertion sort.
 func insertionSortByHarga(dataNFT *arrNFT, jumlahNFT int) {
 	for i := 1; i < jumlahNFT; i++ {
 		temp := dataNFT[i]
@@ -495,7 +518,7 @@ func insertionSortByHarga(dataNFT *arrNFT, jumlahNFT int) {
 	fmt.Println()
 }
 
-// Tambahkan fitur edit ID NFT
+// editIDNFT digunakan untuk mengubah ID NFT tertentu, dengan validasi agar ID baru tidak sama dengan ID lain.
 func editIDNFT(dataNFT *arrNFT, jumlahNFT int, history *historyArr, nHistory *int) {
 	var oldID, newID int
 	fmt.Print("Masukkan ID NFT yang ingin diubah: ")
@@ -530,6 +553,7 @@ func editIDNFT(dataNFT *arrNFT, jumlahNFT int, history *historyArr, nHistory *in
 	fmt.Println("ID NFT berhasil diubah.")
 }
 
+// cetakSemuaData menampilkan seluruh data NFT yang ada di portofolio dalam format tabel.
 func cetakSemuaData(dataNFT arrNFT, jumlahNFT int) {
 	if jumlahNFT == -1 {
 		fmt.Println("+==================================================+")
@@ -548,6 +572,7 @@ func cetakSemuaData(dataNFT arrNFT, jumlahNFT int) {
 	fmt.Println()
 }
 
+// hapusHistory menampilkan menu penghapusan history dan memanggil fungsi sesuai pilihan user.
 func hapusHistory(history *historyArr, nHistory *int) {
 	var pilihan int
 	fmt.Println("Pilihan penghapusan history:")
@@ -566,6 +591,7 @@ func hapusHistory(history *historyArr, nHistory *int) {
 	}
 }
 
+// hapusHistoryTertentu menghapus salah satu history berdasarkan nomor yang dipilih user.
 func hapusHistoryTertentu(history *historyArr, nHistory *int) {
 	if *nHistory == 0 {
 		fmt.Println("Tidak ada history untuk dihapus")
@@ -592,6 +618,7 @@ func hapusHistoryTertentu(history *historyArr, nHistory *int) {
 	fmt.Println("History berhasil dihapus")
 }
 
+// hapusSemuaHistory menghapus seluruh history aktivitas yang tersimpan.
 func hapusSemuaHistory(nHistory *int) {
 	if *nHistory == 0 {
 		fmt.Println("Tidak ada history untuk dihapus")
@@ -610,6 +637,7 @@ func hapusSemuaHistory(nHistory *int) {
 	}
 }
 
+// filterNFT menampilkan NFT yang memiliki harga dalam rentang tertentu (min sampai max).
 func filterNFT(dataNFT arrNFT, jumlahNFT int, min, max float64) {
 	found := false
 	fmt.Println("+============== NFT Dalam Rentang Harga ==============+")
